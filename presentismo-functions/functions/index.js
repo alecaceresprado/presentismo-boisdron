@@ -3,6 +3,9 @@ const admin = require('firebase-admin');
 
 admin.initializeApp();
 
+const RFID = admin.firestore().collection('RFID');
+const AttendanceLog = admin.firestore().collection('AttendanceLog');
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -14,9 +17,7 @@ exports.helloWorld = functions.https.onRequest((request, response) => {
 //
 exports.getAttendanceLog = functions.https.onRequest((request, response) => {
   functions.logger.info("Fetching AttendanceLog", { structuredData: true });
-  admin
-    .firestore()
-    .collection('AttendanceLog')
+  AttendanceLog
     .get()
     .then((data) => {
       let attendanceLog = [];
@@ -28,17 +29,26 @@ exports.getAttendanceLog = functions.https.onRequest((request, response) => {
     .catch(e => functions.logger.error(e))
 });
 
-exports.postAttendanceLog = functions.https.onRequest((request, response) => {
+exports.postAttendanceLog = functions.https.onRequest(async (request, response) => {
+  functions.logger.info("postAttendanceLog: start", { structuredData: true });
+  const { rfid } = request.body;
   const newLog = {
-    rfid: request.body.rfid,
+    rfid,
     date: admin.firestore.Timestamp.fromDate(new Date())
   };
-  admin
-    .firestore()
-    .collection('AttendanceLog')
+  functions.logger.info("postAttendanceLog: fetching owner", { structuredData: true });
+  // get entry on rfid collection to get who owns it
+  const ownerRef = await RFID.where('rfid', '==', `${rfid}`).limit(1).get();
+
+  ownerRef.forEach(o => {
+    newLog.owner = o.data().owner;
+  })
+
+  functions.logger.info("postAttendanceLog: posting result", { structuredData: true });
+  AttendanceLog
     .add(newLog)
-    .then((doc) => {
-      response.json({ message: "success" })
+    .then(() => {
+      response.json({ message: "success", owner: newLog.owner })
     })
     .catch(e => {
       functions.logger.error(e);
