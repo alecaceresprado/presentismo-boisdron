@@ -17,7 +17,7 @@ function App() {
   const fetchApi = () => {
     const dateString = date.toISOString().split('T')[0];
     setIsFetching(true);
-    fetch(`/getDailyUserTable?date=${dateString}`)
+    fetch(`https://us-central1-presentismo-boisdron.cloudfunctions.net/api/dailyUserTable?date=${dateString}`)
       .then(res => res.json())
       .then(({ userTable, unrecognisedRFIDs }) => {
         setUserTable(userTable);

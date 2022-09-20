@@ -20,7 +20,7 @@ export default function UnrecognisedRFIDsTable({ ids, refreshData }) {
 
   const handleBtnClick = () => {
     setIsloading(true);
-    fetch('/addUser', {
+    fetch('https://us-central1-presentismo-boisdron.cloudfunctions.net/api/user', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({

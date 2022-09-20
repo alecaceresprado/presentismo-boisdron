@@ -22,12 +22,15 @@ export default function UsersTable({ users }) {
           {users.map((row, index) => (
             <TableRow
               key={`${row.userName}-${index}`}
+              className={`user-table__user--${row.isPresent ? 'present' : 'ausent'}`}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
               <TableCell component="th" scope="row">
                 {row.userName}
               </TableCell>
-              <TableCell align="right">{row.isPresent ? 'presente' : 'ausente'}</TableCell>
+              <TableCell align="right">
+                {row.isPresent ? 'presente' : 'ausente'}
+              </TableCell>
               <TableCell align="right">{row.time}</TableCell>
             </TableRow>
           ))}

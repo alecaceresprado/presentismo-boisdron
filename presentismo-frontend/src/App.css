@@ -44,6 +44,14 @@
   width: 40%;
 }
 
+.user-table__user--present {
+  background-color: rgb(200, 230, 200);
+}
+
+.user-table__user--ausent {
+  background-color: rgb(230, 200, 200);
+}
+
 .data__unknown--empty {
   padding: 2rem;
 }
