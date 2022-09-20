@@ -1,38 +1,86 @@
 .App {
+  align-content: center;
+  align-items: flex-start;
+  background-color: #e9e9e9;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: flex-start;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.date__container {
+  align-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  margin: 2rem auto;
+  padding: 1rem 2rem;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.date__label {
+  margin-right: 2rem;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.date__spinner {
+  height: 2rem;
+  margin: 0 2rem;
+  width: 2rem;
+}
+
+.data__container {
+  align-content: center;
+  align-items: flex-start;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.data__users,
+.data__unknown {
+  width: 40%;
+}
+
+.data__unknown--empty {
+  padding: 2rem;
+}
+
+
+/* OTHER COMPONENTS */
+
+.modal {
+  align-content: center;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  flex-wrap: nowrap;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  left: 50%;
+  min-height: 5rem;
+  min-width: 25rem;
+  padding: 2rem;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.App-link {
-  color: #61dafb;
+.modal__input {
+  align-content: space-between;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-around;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.modal__error {
+  color: red;
+}
+
+.modal__button {
+  align-self: flex-end;
+  top: 1rem;
+  width: 25%;
 }
