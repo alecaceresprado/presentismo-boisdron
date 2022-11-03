@@ -45,7 +45,7 @@
 
 .data__users,
 .data__unknown {
-  width: 40%;
+  /* width: 40%; */
 }
 
 .user-table__user--present {
@@ -95,4 +95,17 @@
   align-self: flex-end;
   top: 1rem;
   width: 25%;
+}
+
+
+
+@media screen and (max-width: 1024px) {
+  .data__container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .data__users {
+    margin-bottom: 2rem;
+  }
 }

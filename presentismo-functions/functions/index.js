@@ -10,6 +10,7 @@ app.use(cors());
 
 const AttendanceLog = admin.firestore().collection('AttendanceLog');
 const Users = admin.firestore().collection('Users');
+const localeConfig = ["es-AR", { timeZone: "America/Argentina/Tucuman" }];
 
 const lexicSort = (a, b) => {
   if (a.userName === b.userName) {
@@ -61,7 +62,7 @@ app.post("/attendanceLog", async (request, res) => {
   const newLog = {
     rfid: `${rfid}`,
     timeStamp: now,
-    dateHash: now.toISOString().split('T')[0],
+    dateHash: now.toLocaleDateString(...localeConfig),
 
   };
   functions.logger.info("postAttendanceLog: fetching user", { structuredData: true });
@@ -130,14 +131,14 @@ app.get("/dailyUserTable", async (req, res) => {
     return ({
       userName,
       isPresent: !!log,
-      time: log && new Date(log.timeStamp._seconds * 1000).toTimeString().split(' ')[0]
+      time: log && new Date(log.timeStamp._seconds * 1000).toLocaleTimeString(...localeConfig)
     })
   });
 
 
   const unrecognisedRFIDs = attendance.reduce((acc, log) => {
     if (!(acc.some(({ rfid }) => log.rfid === rfid) || log.userName || scanned[log.rfid])) {
-      acc.push({ rfid: log.rfid, time: new Date(log.timeStamp._seconds * 1000).toTimeString().split(' ')[0] });
+      acc.push({ rfid: log.rfid, time: new Date(log.timeStamp._seconds * 1000).toLocaleTimeString(...localeConfig) });
       scanned[log.rfid] = true;
     }
     return acc;

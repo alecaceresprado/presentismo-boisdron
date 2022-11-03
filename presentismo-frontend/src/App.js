@@ -14,8 +14,10 @@ function App() {
   const [unrecognisedRFIDs, setUnrecognisedRFIDs] = useState([]);
   const [isFetching, setIsFetching] = useState(false);
 
+  const localeConfig = ["es-AR", { timeZone: "America/Argentina/Tucuman" }];
+
   const fetchApi = () => {
-    const dateString = date.toISOString().split('T')[0];
+    const dateString = date.toLocaleDateString(...localeConfig);
     setIsFetching(true);
     fetch(`https://us-central1-presentismo-boisdron.cloudfunctions.net/api/dailyUserTable?date=${dateString}`)
       .then(res => res.json())
@@ -35,7 +37,8 @@ function App() {
   }, [date]);
 
   const handleDateChange = (newValue) => {
-    setDate(newValue);
+    console.log(newValue.toDate());
+    setDate(newValue.toDate());
   }
 
   return (
